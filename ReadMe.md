@@ -37,7 +37,7 @@ builder.ConfigureFonts(fonts =>
 Add the namespace:
 
 ```xml
-xmlns:mdi="clr-namespace:AjroudSoftwares.MaterialDesignIcons"
+xmlns:mdi="clr-namespace:MaterialDesignIcons"
 ```
 
 Use the icon:
@@ -57,7 +57,7 @@ Use the icon:
 #### 💻 C# Example
 
 ```csharp
-using AjroudSoftwares.MaterialDesignIcons;
+using MaterialDesignIcons;
 
 var iconLabel = new Label
 {
