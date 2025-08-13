@@ -9,7 +9,7 @@
 		<PackageId>AjroudSoftwares.MaterialDesignIcons.Maui</PackageId>
 		<Authors>Aymen Ajroud</Authors>
 		<Company>AjroudSoftwares</Company>
-		<Version>1.0.0</Version>
+		<Version>1.0.1</Version>
 		<Description>Material Design Icons for .NET MAUI with font and C# mappings</Description>
 		<PackageTags>MAUI;Icons;MaterialDesign;Font;AjroudSoftwares</PackageTags>
 		<Copyright>© AjroudSoftwares 2025</Copyright>
