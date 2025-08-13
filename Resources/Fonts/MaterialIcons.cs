@@ -1,4 +1,4 @@
-namespace AjroudSoftwares.MaterialDesignIcons
+namespace MaterialDesignIcons
 {
     /// <summary>
     /// Material Design Icons font helper
