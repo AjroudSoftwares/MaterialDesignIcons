@@ -1,0 +1,55 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net9.0</TargetFramework>
+		<UseMaui>true</UseMaui>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+
+		<!-- NuGet Metadata -->
+		<PackageId>AjroudSoftwares.MaterialDesignIcons.Maui</PackageId>
+		<Authors>Aymen Ajroud</Authors>
+		<Company>AjroudSoftwares</Company>
+		<Version>1.0.0</Version>
+		<Description>Material Design Icons for .NET MAUI with font and C# mappings</Description>
+		<PackageTags>MAUI;Icons;MaterialDesign;Font;AjroudSoftwares</PackageTags>
+		<Copyright>© AjroudSoftwares 2025</Copyright>
+		<PackageReadmeFile>readme.md</PackageReadmeFile>
+		<Title>materialDesign</Title>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<!-- Font file: treated as content -->
+		<Content Include="Resources\Fonts\MaterialDesignIcons.ttf">
+			<Pack>true</Pack>
+			<PackagePath>contentFiles\any\net9.0\Resources\Fonts\</PackagePath>
+			<PackageCopyToOutput>true</PackageCopyToOutput>
+			<BuildAction>Content</BuildAction>
+		</Content>
+
+		<!-- C# mapping file: compiled in consumer project -->
+		<Content Include="Resources\Fonts\MaterialIcons.cs">
+			<Pack>true</Pack>
+			<PackagePath>contentFiles\any\net9.0\Resources\Fonts\</PackagePath>
+			<PackageCopyToOutput>true</PackageCopyToOutput>
+			<BuildAction>Compile</BuildAction>
+		</Content>
+
+		<!-- .targets file for build-time guidance -->
+		<None Include="MaterialDesignIcons.targets">
+			<Pack>true</Pack>
+			<PackagePath>build\MaterialDesignIcons.targets</PackagePath>
+		</None>
+
+		<!-- Readme for NuGet UI -->
+		<Content Include="readme.md">
+			<Pack>true</Pack>
+			<PackagePath></PackagePath>
+		</Content>
+		<!-- License -->
+		<Content Include="License.txt">
+			<Pack>true</Pack>
+			<PackagePath></PackagePath>
+		</Content>
+	</ItemGroup>
+
+</Project>
