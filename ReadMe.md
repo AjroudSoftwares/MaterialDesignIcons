@@ -1,85 +1,67 @@
-﻿# 🎨 MaterialDesignIcons for .NET MAUI
+﻿# Material Design Icons for .NET MAUI
 
-Effortlessly integrate Material Design Icons into your .NET MAUI apps with font and C# mappings.
+Use Material Design icon fonts in .NET MAUI with strongly-typed C# constants, multi-variant support, and a generated search index.
 
----
-
-## 🚀 Quick Start
-
-### 1️⃣ Install the Package & Register the Font
-
-Install via NuGet:
+## Install
 
 ```bash
-dotnet add package AjroudSoftwares.MaterialDesignIcons
+dotnet add package AjroudSoftwares.MaterialDesignIcons.Maui
 ```
 
-The following files are automatically copied to your project:
+## What This Package Provides
 
-- `Resources/Fonts/MaterialDesignIcons.ttf` — the icon font
-- `Resources/Fonts/MaterialIcons.cs` — C# constants for icon glyphs
+- Four icon variants: Regular, Outlined, Rounded, Sharp
+- Generated C# constants:
+    - `MaterialIcons.Regular.*`
+    - `MaterialIcons.Outlined.*`
+    - `MaterialIcons.Rounded.*`
+    - `MaterialIcons.Sharp.*`
+- Runtime discovery index via `MaterialIconsMap`:
+    - `Search(string keyword)`
+    - `Resolve(string key)`
+    - `Categories`
 
-Register the font in `MauiProgram.cs`:
+## Register Fonts in MAUI
 
 ```csharp
 builder.ConfigureFonts(fonts =>
 {
-    fonts.AddFont("MaterialDesignIcons.ttf", "MaterialIcons");
+        fonts.AddFont("MaterialIcons-Regular.ttf", "MaterialIconsRegular");
+        fonts.AddFont("MaterialIconsOutlined-Regular.ttf", "MaterialIconsOutlined");
+        fonts.AddFont("MaterialIconsRound-Regular.ttf", "MaterialIconsRounded");
+        fonts.AddFont("MaterialIconsSharp-Regular.ttf", "MaterialIconsSharp");
 });
 ```
 
----
-
-### 2️⃣ Use the Icons
-
-#### 🧩 XAML Example
-
-Add the namespace:
-
-```xml
-xmlns:mdi="clr-namespace:MaterialDesignIcons"
-```
-
-Use the icon:
-
-```xml
-<Label Text="{x:Static mdi:MaterialIcons.Account}"
-       FontFamily="MaterialIcons"
-       FontSize="32" />
-
-<!-- Or as a FontImageSource -->
-<FontImageSource x:Key="IconAccount"
-                 Glyph="{x:Static mdi:MaterialIcons.Account}"
-                 FontFamily="MaterialIcons"
-                 Size="32" />
-```
-
-#### 💻 C# Example
+## Usage in C#
 
 ```csharp
-using MaterialDesignIcons;
+using AjroudSoftwares.MaterialDesignIcons.Maui;
 
-var iconLabel = new Label
-{
-    Text = MaterialIcons.Account,
-    FontFamily = "MaterialIcons",
-    FontSize = 32
-};
+var regularHome = MaterialIcons.Regular.Home;
+var outlinedHome = MaterialIcons.Outlined.Home;
+
+var key = "Rounded.ArrowBack";
+var glyph = MaterialIconsMap.Resolve(key);
 ```
 
----
+## Usage in XAML
 
-## 📦 Package Info
+```xml
+xmlns:mdi="clr-namespace:AjroudSoftwares.MaterialDesignIcons.Maui"
 
-- Author: Aymen Ajroud
-- Company: AjroudSoftwares
-- License: MIT
-- Version: 1.0.0
+<Label Text="{x:Static mdi:MaterialIcons+Regular.Home}"
+             FontFamily="MaterialIconsRegular"
+             FontSize="28" />
+```
 
----
-## 📄 License
+## AI/Copilot-Friendly Discovery
 
-This project is licensed under the [MIT License](./LICENSE).  
-Feel free to use, modify, and distribute it with proper attribution.
-___
-✨ Enjoy beautiful Material Design Icons in your .NET MAUI app!
+```csharp
+var arrows = MaterialIconsMap.Search("arrow");
+var allAccountIcons = MaterialIconsMap.Categories["account"];
+```
+
+## License
+
+MIT. See `License.txt`.

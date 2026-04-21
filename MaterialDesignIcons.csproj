@@ -1,63 +1,119 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFramework>net9.0</TargetFramework>
+		<TargetFrameworks>net8.0;net9.0;net10.0</TargetFrameworks>
 		<UseMaui>true</UseMaui>
+		<SkipValidateMauiImplicitPackageReferences>true</SkipValidateMauiImplicitPackageReferences>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-
-		<!-- NuGet Metadata -->
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<EmbedUntrackedSources>true</EmbedUntrackedSources>
+		<ContinuousIntegrationBuild Condition="'$(CI)' == 'true'">true</ContinuousIntegrationBuild>
 		<PackageId>AjroudSoftwares.MaterialDesignIcons.Maui</PackageId>
 		<Authors>Aymen Ajroud</Authors>
 		<Company>AjroudSoftwares</Company>
-		<Version>1.0.1</Version>
-		<Description>Material Design Icons for .NET MAUI with font and C# mappings</Description>
-		<PackageTags>MAUI;Icons;MaterialDesign;Font;AjroudSoftwares</PackageTags>
+		<Version>1.1.0</Version>
+		<Description>Material Design Icons for .NET MAUI with generated font mappings across Regular, Outlined, Rounded, and Sharp variants, plus searchable runtime icon index support.</Description>
+		<PackageTags>maui;dotnet-maui;icons;material-icons;material-design;font;xaml;fonticons;ui;cross-platform</PackageTags>
 		<Copyright>© AjroudSoftwares 2025</Copyright>
-		<PackageReadmeFile>readme.md</PackageReadmeFile>
-		<Title>materialDesign</Title>
-		<PackageIcon>icons8-tech-480 (1).png</PackageIcon>
+		<PackageReadmeFile>ReadMe.md</PackageReadmeFile>
+		<PackageReleaseNotes>Added multi-variant Material icons generation (Regular/Outlined/Rounded/Sharp), searchable MaterialIconsMap index, and automated font/csproj sync tooling.</PackageReleaseNotes>
+		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+		<Title>AjroudSoftwares Material Design Icons for .NET MAUI</Title>
+		<PackageIcon>package-icon.png</PackageIcon>
 		<RepositoryUrl>https://github.com/AjroudSoftwares/MaterialDesignIcons</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
 		<PackageProjectUrl>https://github.com/AjroudSoftwares/MaterialDesignIcons</PackageProjectUrl>
 		<PackageLicenseFile>License.txt</PackageLicenseFile>
 	</PropertyGroup>
-
 	<ItemGroup>
-		<!-- Font file: treated as content -->
 		<Content Include="Resources\Fonts\MaterialDesignIcons.ttf">
 			<Pack>true</Pack>
-			<PackagePath>contentFiles\any\net9.0\Resources\Fonts\</PackagePath>
+			<PackagePath>contentFiles\any\any\Resources\Fonts\</PackagePath>
 			<PackageCopyToOutput>true</PackageCopyToOutput>
 			<BuildAction>Content</BuildAction>
 		</Content>
-
-		<!-- C# mapping file: compiled in consumer project -->
 		<Content Include="Resources\Fonts\MaterialIcons.cs">
 			<Pack>true</Pack>
-			<PackagePath>contentFiles\any\net9.0\Resources\Fonts\</PackagePath>
+			<PackagePath>contentFiles\any\any\Resources\Fonts\</PackagePath>
 			<PackageCopyToOutput>true</PackageCopyToOutput>
 			<BuildAction>Compile</BuildAction>
 		</Content>
-		<None Include="..\AjroudSoftwares\public\assets\media\icons8-tech-480 (1).png">
-		  <Pack>True</Pack>
-		  <PackagePath>\</PackagePath>
+		<Content Include="Resources\Fonts\MaterialIcons.Regular.cs">
+			<Pack>true</Pack>
+			<PackagePath>contentFiles\any\any\Resources\Fonts\</PackagePath>
+			<PackageCopyToOutput>true</PackageCopyToOutput>
+			<BuildAction>Compile</BuildAction>
+		</Content>
+		<Content Include="Resources\Fonts\MaterialIcons.Outlined.cs">
+			<Pack>true</Pack>
+			<PackagePath>contentFiles\any\any\Resources\Fonts\</PackagePath>
+			<PackageCopyToOutput>true</PackageCopyToOutput>
+			<BuildAction>Compile</BuildAction>
+		</Content>
+		<Content Include="Resources\Fonts\MaterialIcons.Rounded.cs">
+			<Pack>true</Pack>
+			<PackagePath>contentFiles\any\any\Resources\Fonts\</PackagePath>
+			<PackageCopyToOutput>true</PackageCopyToOutput>
+			<BuildAction>Compile</BuildAction>
+		</Content>
+		<Content Include="Resources\Fonts\MaterialIcons.Sharp.cs">
+			<Pack>true</Pack>
+			<PackagePath>contentFiles\any\any\Resources\Fonts\</PackagePath>
+			<PackageCopyToOutput>true</PackageCopyToOutput>
+			<BuildAction>Compile</BuildAction>
+		</Content>
+		<Content Include="Resources\Fonts\MaterialIconsMap.cs">
+			<Pack>true</Pack>
+			<PackagePath>contentFiles\any\any\Resources\Fonts\</PackagePath>
+			<PackageCopyToOutput>true</PackageCopyToOutput>
+			<BuildAction>Compile</BuildAction>
+		</Content>
+		<Content Include="Resources\Fonts\MaterialIcons-Regular.ttf">
+			<Pack>true</Pack>
+			<PackagePath>contentFiles\any\any\Resources\Fonts\</PackagePath>
+			<PackageCopyToOutput>true</PackageCopyToOutput>
+			<BuildAction>Content</BuildAction>
+		</Content>
+		<Content Include="Resources\Fonts\MaterialIconsOutlined-Regular.ttf">
+			<Pack>true</Pack>
+			<PackagePath>contentFiles\any\any\Resources\Fonts\</PackagePath>
+			<PackageCopyToOutput>true</PackageCopyToOutput>
+			<BuildAction>Content</BuildAction>
+		</Content>
+		<Content Include="Resources\Fonts\MaterialIconsRound-Regular.ttf">
+			<Pack>true</Pack>
+			<PackagePath>contentFiles\any\any\Resources\Fonts\</PackagePath>
+			<PackageCopyToOutput>true</PackageCopyToOutput>
+			<BuildAction>Content</BuildAction>
+		</Content>
+		<Content Include="Resources\Fonts\MaterialIconsSharp-Regular.ttf">
+			<Pack>true</Pack>
+			<PackagePath>contentFiles\any\any\Resources\Fonts\</PackagePath>
+			<PackageCopyToOutput>true</PackageCopyToOutput>
+			<BuildAction>Content</BuildAction>
+		</Content>
+		<None Include="package-icon.png">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
 		</None>
-
-		<!-- .targets file for build-time guidance -->
 		<None Include="MaterialDesignIcons.targets">
 			<Pack>true</Pack>
-			<PackagePath>build\MaterialDesignIcons.targets</PackagePath>
+			<PackagePath>build\$(PackageId).targets</PackagePath>
 		</None>
-
-		<!-- Readme for NuGet UI -->
-		<Content Include="readme.md">
+		<Content Include="ReadMe.md">
 			<Pack>true</Pack>
-			<PackagePath></PackagePath>
+			<PackagePath />
 		</Content>
-		<!-- License -->
-	  <None Update="License.txt">
-	    <Pack>True</Pack>
-	    <PackagePath>\</PackagePath>
-	  </None>
+		<None Include="License.txt">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
 	</ItemGroup>
-
+	<ItemGroup>
+		<MauiFont Include="Resources\Fonts\MaterialIcons-Regular.ttf" />
+		<MauiFont Include="Resources\Fonts\MaterialIconsOutlined-Regular.ttf" />
+		<MauiFont Include="Resources\Fonts\MaterialIconsRound-Regular.ttf" />
+		<MauiFont Include="Resources\Fonts\MaterialIconsSharp-Regular.ttf" />
+	</ItemGroup>
 </Project>
