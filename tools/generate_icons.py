@@ -257,140 +257,27 @@ def header_lines(version: str) -> List[str]:
     ]
 
 
-def generate_variant_cs(variant: VariantConfig, icons: List[Dict[str, str]], version: str) -> str:
-    lines: List[str] = []
-    lines.extend(header_lines(version))
-    lines.extend(
-        [
-            "namespace AjroudSoftwares.MaterialDesignIcons.Maui;",
-            "",
-            "public static partial class MaterialIcons",
-            "{",
-            f"    public static class {variant.class_name}",
-            "    {",
-        ]
-    )
-
-    for icon in icons:
-        display_name = html.escape(icon["display"]).replace('"', "&quot;")
-        lines.append(f"        /// <summary>{display_name}</summary>")
-        lines.append(f"        public const string {icon['pascal']} = \"\\u{icon['code']}\";")
-
-    lines.extend(["    }", "}", ""])
-    return "\n".join(lines)
-
-
-def generate_map_cs(
+def generate_metadata_text(
     all_variant_icons: Dict[str, List[Dict[str, str]]],
     version: str,
 ) -> str:
-    lines: List[str] = []
-    lines.extend(header_lines(version))
-    lines.extend(
-        [
-            "using System;",
-            "using System.Collections.Generic;",
-            "using System.Linq;",
-            "",
-            "namespace AjroudSoftwares.MaterialDesignIcons.Maui;",
-            "",
-            "/// <summary>",
-            "/// MaterialIconsMap - Icon discovery index for Material Design Icons (MAUI).",
-            "///",
-            "/// USAGE FOR AI AGENTS / GITHUB COPILOT:",
-            "/// - To find an icon by name:     MaterialIconsMap.Search(\"home\")",
-            "/// - To get all arrow icons:      MaterialIconsMap.Search(\"arrow\")",
-            "/// - To resolve to unicode:       MaterialIconsMap.Resolve(\"Regular.Home\")",
-            "/// - To browse by category:       MaterialIconsMap.Categories[\"arrow\"]",
-            "/// - To use in XAML:              Icon=\"{x:Static mdi:MaterialIcons+Regular.Home}\"",
-            "/// - To use in C#:                MaterialIcons.Regular.Home",
-            "///",
-            "/// Available variants: Regular, Outlined, Rounded, Sharp",
-            "/// Total icons: ~7,400 per variant",
-            "/// </summary>",
-            "public static class MaterialIconsMap",
-            "{",
-            "    /// <summary>",
-            "    /// Full flat index of all icons across all variants.",
-            "    /// Key format: \"Variant.PascalName\" - e.g. \"Regular.AccountCircle\"",
-            "    /// Use Search() or FindByKeyword() to discover icons at runtime or design time.",
-            "    /// </summary>",
-            "    public static readonly IReadOnlyDictionary<string, string> All = new Dictionary<string, string>(StringComparer.Ordinal)",
-            "    {",
-        ]
-    )
+    generated_at = dt.datetime.now(dt.timezone.utc).astimezone().strftime("%Y-%m-%d %H:%M:%S %z")
+    lines = [
+        f"# Generated: {generated_at} | Material Design Icons {version}",
+        "# Format: Variant<TAB>Snake<TAB>Pascal<TAB>HexCode",
+    ]
 
-    map_entries: List[Tuple[str, str, str]] = []
+    entries: List[Tuple[str, str, str, str]] = []
     for variant_name, icons in all_variant_icons.items():
         for icon in icons:
-            key = f"{variant_name}.{icon['pascal']}"
-            value = f"\\u{icon['code']}"
-            map_entries.append((key, value, icon["snake"]))
+            entries.append((variant_name, icon["snake"], icon["pascal"], icon["code"]))
 
-    map_entries.sort(key=lambda item: item[0])
+    entries.sort(key=lambda item: (item[0], item[1], item[2]))
 
-    for key, value, _ in map_entries:
-        lines.append(f"        [\"{key}\"] = \"{value}\",")
+    for variant_name, snake_name, pascal_name, hex_code in entries:
+        lines.append(f"{variant_name}\t{snake_name}\t{pascal_name}\t{hex_code}")
 
-    lines.extend(
-        [
-            "    };",
-            "",
-            "    public static readonly IReadOnlyDictionary<string, string> Regular = BuildVariantIndex(\"Regular.\");",
-            "    public static readonly IReadOnlyDictionary<string, string> Outlined = BuildVariantIndex(\"Outlined.\");",
-            "    public static readonly IReadOnlyDictionary<string, string> Rounded = BuildVariantIndex(\"Rounded.\");",
-            "    public static readonly IReadOnlyDictionary<string, string> Sharp = BuildVariantIndex(\"Sharp.\");",
-            "",
-            "    /// <summary>",
-            "    /// Icons grouped by first word of their name (e.g. \"arrow\", \"account\", \"add\").",
-            "    /// Useful for AI agents browsing available icon families.",
-            "    /// </summary>",
-            "    public static readonly IReadOnlyDictionary<string, string[]> Categories = new Dictionary<string, string[]>(StringComparer.OrdinalIgnoreCase)",
-            "    {",
-        ]
-    )
-
-    categories: Dict[str, List[str]] = {}
-    for key, _value, snake_name in map_entries:
-        category = (snake_name.split("_", 1)[0] if snake_name else "misc").lower()
-        categories.setdefault(category, []).append(key)
-
-    for category in sorted(categories.keys()):
-        keys = sorted(set(categories[category]))
-        values = ", ".join(f"\"{k}\"" for k in keys)
-        lines.append(f"        [\"{category}\"] = new[] {{ {values} }},")
-
-    lines.extend(
-        [
-            "    };",
-            "",
-            "    /// <summary>",
-            "    /// Search icons by keyword across all variants.",
-            "    /// Returns matching keys from the All dictionary.",
-            "    /// Example: Search(\"arrow\") returns all icons whose name contains \"arrow\"",
-            "    /// </summary>",
-            "    public static IEnumerable<string> Search(string keyword) =>",
-            "        string.IsNullOrWhiteSpace(keyword)",
-            "            ? Enumerable.Empty<string>()",
-            "            : All.Keys.Where(k => k.Contains(keyword, StringComparison.OrdinalIgnoreCase));",
-            "",
-            "    public static IEnumerable<string> FindByKeyword(string keyword) => Search(keyword);",
-            "",
-            "    /// <summary>",
-            "    /// Resolve a key like \"Rounded.Home\" to its unicode string.",
-            "    /// Returns null if not found.",
-            "    /// </summary>",
-            "    public static string? Resolve(string key) =>",
-            "        All.TryGetValue(key, out var val) ? val : null;",
-            "",
-            "    private static IReadOnlyDictionary<string, string> BuildVariantIndex(string prefix) =>",
-            "        All.Where(pair => pair.Key.StartsWith(prefix, StringComparison.Ordinal))",
-            "           .ToDictionary(pair => pair.Key, pair => pair.Value, StringComparer.Ordinal);",
-            "}",
-            "",
-        ]
-    )
-
+    lines.append("")
     return "\n".join(lines)
 
 
@@ -510,12 +397,20 @@ def run() -> int:
         icons = parse_codepoints_file(codepoints_path)
         variant_icons[variant.class_name] = icons
 
-        variant_code = generate_variant_cs(variant, icons, download_ref)
-        (output_dir / variant.generated_file).write_text(variant_code, encoding="utf-8")
+    metadata_path = output_dir / "MaterialIcons.metadata.txt"
+    metadata_content = generate_metadata_text(variant_icons, download_ref)
+    metadata_path.write_text(metadata_content, encoding="utf-8")
 
-    map_content = generate_map_cs(variant_icons, download_ref)
-    map_path = output_dir / "MaterialIconsMap.cs"
-    map_path.write_text(map_content, encoding="utf-8")
+    obsolete_generated_files = [
+        output_dir / "MaterialIcons.Regular.cs",
+        output_dir / "MaterialIcons.Outlined.cs",
+        output_dir / "MaterialIcons.Rounded.cs",
+        output_dir / "MaterialIcons.Sharp.cs",
+        output_dir / "MaterialIconsMap.cs",
+    ]
+    for obsolete_path in obsolete_generated_files:
+        if obsolete_path.exists():
+            obsolete_path.unlink()
 
     csproj_path = find_csproj(project_root)
     update_csproj_fonts(csproj_path)
@@ -529,14 +424,11 @@ def run() -> int:
     for variant in VARIANTS:
         count = len(variant_icons[variant.class_name])
         total_icons += count
-        print(
-            f"\u2705 {variant.class_name:<9} — {count:,} icons → "
-            f"{rel_output_dir}/{variant.generated_file}"
-        )
+        print(f"\u2705 {variant.class_name:<9} — {count:,} icons")
 
     print(
-        f"\U0001f5fa\ufe0f  Icon map  — {total_icons:,} keys → "
-        f"{rel_output_dir}/MaterialIconsMap.cs"
+        f"\U0001f4c4 Metadata  — {total_icons:,} rows → "
+        f"{rel_output_dir}/MaterialIcons.metadata.txt"
     )
     print(f"\U0001f4e6 Fonts     → {rel_output_dir}/")
     print(f"\U0001f3f7\ufe0f  Version  : {latest_ref}")

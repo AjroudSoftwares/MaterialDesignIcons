@@ -12,12 +12,12 @@
 		<PackageId>AjroudSoftwares.MaterialDesignIcons.Maui</PackageId>
 		<Authors>Aymen Ajroud</Authors>
 		<Company>AjroudSoftwares</Company>
-		<Version>1.1.0</Version>
-		<Description>Material Design Icons for .NET MAUI with generated font mappings across Regular, Outlined, Rounded, and Sharp variants, plus searchable runtime icon index support.</Description>
+		<Version>2.0.0</Version>
+		<Description>Google Material icons for .NET MAUI with metadata-backed runtime lookup, search support, and multi-variant font helpers across Regular, Outlined, Rounded, and Sharp.</Description>
 		<PackageTags>maui;dotnet-maui;icons;material-icons;material-design;font;xaml;fonticons;ui;cross-platform</PackageTags>
 		<Copyright>© AjroudSoftwares 2025</Copyright>
 		<PackageReadmeFile>ReadMe.md</PackageReadmeFile>
-		<PackageReleaseNotes>Added multi-variant Material icons generation (Regular/Outlined/Rounded/Sharp), searchable MaterialIconsMap index, and automated font/csproj sync tooling.</PackageReleaseNotes>
+		<PackageReleaseNotes>Version 2 replaces generated per-icon constants with metadata-backed runtime lookup, dynamic XAML/C# usage guidance, and a simplified package surface for the four Google Material variants.</PackageReleaseNotes>
 		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
 		<Title>AjroudSoftwares Material Design Icons for .NET MAUI</Title>
 		<PackageIcon>package-icon.png</PackageIcon>
@@ -27,48 +27,6 @@
 		<PackageLicenseFile>License.txt</PackageLicenseFile>
 	</PropertyGroup>
 	<ItemGroup>
-		<Content Include="Resources\Fonts\MaterialDesignIcons.ttf">
-			<Pack>true</Pack>
-			<PackagePath>contentFiles\any\any\Resources\Fonts\</PackagePath>
-			<PackageCopyToOutput>true</PackageCopyToOutput>
-			<BuildAction>Content</BuildAction>
-		</Content>
-		<Content Include="Resources\Fonts\MaterialIcons.cs">
-			<Pack>true</Pack>
-			<PackagePath>contentFiles\any\any\Resources\Fonts\</PackagePath>
-			<PackageCopyToOutput>true</PackageCopyToOutput>
-			<BuildAction>Compile</BuildAction>
-		</Content>
-		<Content Include="Resources\Fonts\MaterialIcons.Regular.cs">
-			<Pack>true</Pack>
-			<PackagePath>contentFiles\any\any\Resources\Fonts\</PackagePath>
-			<PackageCopyToOutput>true</PackageCopyToOutput>
-			<BuildAction>Compile</BuildAction>
-		</Content>
-		<Content Include="Resources\Fonts\MaterialIcons.Outlined.cs">
-			<Pack>true</Pack>
-			<PackagePath>contentFiles\any\any\Resources\Fonts\</PackagePath>
-			<PackageCopyToOutput>true</PackageCopyToOutput>
-			<BuildAction>Compile</BuildAction>
-		</Content>
-		<Content Include="Resources\Fonts\MaterialIcons.Rounded.cs">
-			<Pack>true</Pack>
-			<PackagePath>contentFiles\any\any\Resources\Fonts\</PackagePath>
-			<PackageCopyToOutput>true</PackageCopyToOutput>
-			<BuildAction>Compile</BuildAction>
-		</Content>
-		<Content Include="Resources\Fonts\MaterialIcons.Sharp.cs">
-			<Pack>true</Pack>
-			<PackagePath>contentFiles\any\any\Resources\Fonts\</PackagePath>
-			<PackageCopyToOutput>true</PackageCopyToOutput>
-			<BuildAction>Compile</BuildAction>
-		</Content>
-		<Content Include="Resources\Fonts\MaterialIconsMap.cs">
-			<Pack>true</Pack>
-			<PackagePath>contentFiles\any\any\Resources\Fonts\</PackagePath>
-			<PackageCopyToOutput>true</PackageCopyToOutput>
-			<BuildAction>Compile</BuildAction>
-		</Content>
 		<Content Include="Resources\Fonts\MaterialIcons-Regular.ttf">
 			<Pack>true</Pack>
 			<PackagePath>contentFiles\any\any\Resources\Fonts\</PackagePath>
@@ -105,6 +63,9 @@
 			<Pack>true</Pack>
 			<PackagePath />
 		</Content>
+		<EmbeddedResource Include="Resources\Fonts\MaterialIcons.metadata.txt">
+			<LogicalName>AjroudSoftwares.MaterialDesignIcons.Maui.Resources.Fonts.MaterialIcons.metadata.txt</LogicalName>
+		</EmbeddedResource>
 		<None Include="License.txt">
 			<Pack>True</Pack>
 			<PackagePath>\</PackagePath>
