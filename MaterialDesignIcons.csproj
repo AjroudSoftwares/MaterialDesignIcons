@@ -12,12 +12,15 @@
 		<PackageId>AjroudSoftwares.MaterialDesignIcons.Maui</PackageId>
 		<Authors>Aymen Ajroud</Authors>
 		<Company>AjroudSoftwares</Company>
-		<Version>2.0.0</Version>
+		<Version>2.0.1</Version>
+		<AssemblyVersion>2.0.1</AssemblyVersion>
+		<FileVersion>2.0.1</FileVersion>
+		<InformationalVersion>2.0.1</InformationalVersion>
 		<Description>Google Material icons for .NET MAUI with metadata-backed runtime lookup, search support, and multi-variant font helpers across Regular, Outlined, Rounded, and Sharp.</Description>
 		<PackageTags>maui;dotnet-maui;icons;material-icons;material-design;font;xaml;fonticons;ui;cross-platform</PackageTags>
-		<Copyright>© AjroudSoftwares 2025</Copyright>
+		<Copyright>© AjroudSoftwares 2026</Copyright>
 		<PackageReadmeFile>ReadMe.md</PackageReadmeFile>
-		<PackageReleaseNotes>Version 2 replaces generated per-icon constants with metadata-backed runtime lookup, dynamic XAML/C# usage guidance, and a simplified package surface for the four Google Material variants.</PackageReleaseNotes>
+		<PackageReleaseNotes>v2.0.1: Explicit versioning to resolve NuGet cache/assembly version mismatch. Ensures fonts, metadata, and targets are bundled consistently across all target frameworks.</PackageReleaseNotes>
 		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
 		<Title>AjroudSoftwares Material Design Icons for .NET MAUI</Title>
 		<PackageIcon>package-icon.png</PackageIcon>

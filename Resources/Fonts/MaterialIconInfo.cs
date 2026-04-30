@@ -2,23 +2,15 @@
 
 namespace AjroudSoftwares.MaterialDesignIcons.Maui;
 
-public sealed class MaterialIconInfo
+public sealed class MaterialIconInfo(MaterialIconVariant variant, string name, string pascalName, string glyph)
 {
-    public MaterialIconInfo(MaterialIconVariant variant, string name, string pascalName, string glyph)
-    {
-        Variant = variant;
-        Name = name;
-        PascalName = pascalName;
-        Glyph = glyph;
-    }
+    public MaterialIconVariant Variant { get; } = variant;
 
-    public MaterialIconVariant Variant { get; }
+    public string Name { get; } = name;
 
-    public string Name { get; }
+    public string PascalName { get; } = pascalName;
 
-    public string PascalName { get; }
-
-    public string Glyph { get; }
+    public string Glyph { get; } = glyph;
 
     public string Key => $"{Variant}.{PascalName}";
 
